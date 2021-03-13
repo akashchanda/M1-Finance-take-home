@@ -83,3 +83,7 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+Android/app/src/test/java/com/example/technicalassessment/ExampleUnitTest.java
+Android/app/src/androidTest/java/com/example/technicalassessment/ExampleInstrumentedTest.java
+Android/.idea/jarRepositories.xml
+Android/.idea/runConfigurations.xml
