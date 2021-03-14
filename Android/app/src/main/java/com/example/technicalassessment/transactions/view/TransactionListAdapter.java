@@ -21,19 +21,31 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
     private static final String TAG = "TransactionListAdapter";
 
     private TransactionData[] mDataSet;
+    private final OnTransactionClickListener mTransactionClickListener;
+
+    public TransactionListAdapter(TransactionData[] dataSet, OnTransactionClickListener listener) {
+        mDataSet = dataSet;
+        mTransactionClickListener = listener;
+    }
+
+    public interface OnTransactionClickListener {
+        void onTransactionClick(TransactionData transactionData, int position);
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView mDescription;
         private final TextView mDate;
         private final TextView mAmount;
+        private final OnTransactionClickListener mTransactionClickListener;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, OnTransactionClickListener transactionClickListener) {
             super(itemView);
 
             mDescription = itemView.findViewById(R.id.transaction_description);
             mDate = itemView.findViewById(R.id.transaction_date);
             mAmount = itemView.findViewById(R.id.transaction_amount);
+            mTransactionClickListener = transactionClickListener;
         }
 
         public TextView getDescriptionTextView() {
@@ -47,10 +59,10 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
         public TextView getAmountTextView() {
             return mAmount;
         }
-    }
 
-    public TransactionListAdapter(TransactionData[] dataSet) {
-        mDataSet = dataSet;
+        public OnTransactionClickListener getTransactionClickListener() {
+            return mTransactionClickListener;
+        }
     }
 
     @NonNull
@@ -58,14 +70,23 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.transaction_row_item, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mTransactionClickListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         setViewHolderDescriptionField(holder, position);
         setViewHolderDateField(holder, position);
         setViewHolderAmountField(holder, position);
+        final OnTransactionClickListener listener = holder.getTransactionClickListener();
+        if(listener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onTransactionClick(mDataSet[position], position);
+                }
+            });
+        }
     }
 
     @Override

@@ -20,5 +20,6 @@
     <style name="Title"
         parent="@style/TextAppearance.AppCompat.Title">
         <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">25sp</item>
     </style>
 </resources>
