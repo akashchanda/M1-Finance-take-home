@@ -7,6 +7,7 @@
     <string name="sort_amount_descending">Amount ↓</string>
     <string name="transactions">Transactions</string>
     <string name="close">Close</string>
+    <string name="check_image">Image of check.</string>
 
     <!--    formats-->
     <string name="amount_format">"$%.2f"</string>

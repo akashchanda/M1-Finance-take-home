@@ -2,11 +2,13 @@ package com.example.technicalassessment.transactions.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.technicalassessment.R;
 import com.example.technicalassessment.transactions.controller.TransactionsController;
 import com.example.technicalassessment.transactions.controller.TransactionsControllerFactory;
+import com.example.technicalassessment.transactions.model.CheckImageDialog;
 import com.example.technicalassessment.transactions.model.TransactionData;
 
 import java.util.Objects;
@@ -88,6 +91,24 @@ public class TransactionsListFragment extends Fragment implements TransactionLis
         detailedTransactionDialog.show();
     }
 
+    void openCheckView(TransactionData transactionData, int transactionsListPosition, Bitmap checkImage) {
+        Activity activity = getActivity();
+        if(activity != null)
+            activity.runOnUiThread(() -> {
+                final CheckImageDialog checkImageDialog = new CheckImageDialog(Objects.requireNonNull(getContext()),
+                        checkImage,
+                        new CheckImageDialog.CheckImageDialogInterface() {
+                            @Override
+                            public void onCloseButtonClicked() {
+                                //do nothing
+                            }
+                        });
+                checkImageDialog.show();
+            });
+        else
+            Log.w(TAG, "activity is null");
+    }
+
     /**
      * Initialize the transactions list.
      */
@@ -98,7 +119,7 @@ public class TransactionsListFragment extends Fragment implements TransactionLis
 
     //TODO remove this method or move it to mock object
     private TransactionData[] createFakeDataSet() {
-        TransactionData one = new TransactionData("0", "2020-11-16T08:10:12:001Z", 11.78f, true, "Check #1234", "SOME URL ENDPOINT FOR A CHECK IMAGE");
+        TransactionData one = new TransactionData("0", "2020-11-16T08:10:12:001Z", 11.78f, true, "Check #1234", "https://cdn1.iconfinder.com/data/icons/logotypes/32/android-512.png");
         TransactionData two = new TransactionData("0", "2020-11-18T08:08:12:001Z", 21.34f, false, "Kwik-E-Mart", "null");
         return new TransactionData[] {one, two};
     }

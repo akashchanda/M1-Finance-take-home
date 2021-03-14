@@ -1,12 +1,12 @@
 package com.example.technicalassessment.transactions.view;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.technicalassessment.R;
-import com.example.technicalassessment.transactions.controller.TransactionsController;
 import com.example.technicalassessment.transactions.model.TransactionData;
 
 /**
@@ -30,5 +30,10 @@ public class TransactionsActivity extends AppCompatActivity implements Transacti
     @Override
     public void openDetailedTransactionView(TransactionData transactionData, int transactionsListPosition) {
         mListFragment.openDetailedTransactionView(transactionData, transactionsListPosition);
+    }
+
+    @Override
+    public void openCheckView(TransactionData transactionData, int transactionsListPosition, Bitmap checkImage) {
+        mListFragment.openCheckView(transactionData, transactionsListPosition, checkImage);
     }
 }

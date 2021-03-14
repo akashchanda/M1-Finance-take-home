@@ -4,4 +4,5 @@
     <dimen name="transaction_row_item_height">75dp</dimen>
     <dimen name="transaction_dialog_height">400dp</dimen>
     <dimen name="transaction_dialog_width">300dp</dimen>
+    <dimen name="check_image_horizontal_padding">20dp</dimen>
 </resources>

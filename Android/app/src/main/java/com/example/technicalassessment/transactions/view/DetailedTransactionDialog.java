@@ -34,11 +34,6 @@ class DetailedTransactionDialog extends Dialog {
     }
 
     DetailedTransactionDialog(@NonNull Context context, String description, String userDescription,
-                              float amount, String date) {
-        this(context, description, userDescription, amount, date, null);
-    }
-
-    DetailedTransactionDialog(@NonNull Context context, String description, String userDescription,
                               float amount, String date, DetailedTransactionDialogInterface listener) {
         super(context);
         mListener = listener;

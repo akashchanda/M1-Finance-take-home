@@ -56,7 +56,7 @@ public class TransactionData {
         mAmount = amount;
     }
 
-    public boolean isIsCredit() {
+    public boolean isCredit() {
         return mIsCredit;
     }
 
