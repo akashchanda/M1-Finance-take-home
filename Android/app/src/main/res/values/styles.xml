@@ -16,4 +16,9 @@
         parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/m1_green</item>
     </style>
+
+    <style name="Title"
+        parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:gravity">center_vertical</item>
+    </style>
 </resources>

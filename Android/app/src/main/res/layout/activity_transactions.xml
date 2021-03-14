@@ -10,7 +10,7 @@
         android:id="@+id/top_bar_fragment"
         android:name="com.example.technicalassessment.transactions.view.TopBarFragment"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/top_bar_height"
         app:layout_constraintBottom_toTopOf="@id/transaction_fragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
