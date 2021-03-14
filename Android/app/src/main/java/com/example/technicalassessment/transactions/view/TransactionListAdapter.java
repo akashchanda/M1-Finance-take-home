@@ -80,18 +80,18 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
         setViewHolderAmountField(holder, position);
         final OnTransactionClickListener listener = holder.getTransactionClickListener();
         if(listener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onTransactionClick(mDataSet[position], position);
-                }
-            });
+            holder.itemView.setOnClickListener(v -> listener.onTransactionClick(mDataSet[position], position));
         }
     }
 
     @Override
     public int getItemCount() {
         return mDataSet.length;
+    }
+
+    public void setDataSet(TransactionData[] dataSet) {
+        mDataSet = dataSet;
+        notifyDataSetChanged();
     }
 
     /**

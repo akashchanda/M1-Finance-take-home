@@ -21,6 +21,7 @@ import com.example.technicalassessment.transactions.controller.TransactionsContr
 import com.example.technicalassessment.transactions.controller.TransactionsControllerFactory;
 import com.example.technicalassessment.transactions.model.CheckImageDialog;
 import com.example.technicalassessment.transactions.model.TransactionData;
+import com.example.technicalassessment.transactions.model.TransactionsJsonResponse;
 
 import java.util.Objects;
 
@@ -36,7 +37,7 @@ public class TransactionsListFragment extends Fragment implements TransactionLis
     private RecyclerView mRecyclerView;
     private TransactionListAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private TransactionData[] mDataSet;
+    private TransactionData[] mDataSet = new TransactionData[0];
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -109,19 +110,22 @@ public class TransactionsListFragment extends Fragment implements TransactionLis
             Log.w(TAG, "activity is null");
     }
 
+    void updateTransactionsList(TransactionsJsonResponse transactionsData) {
+        Activity activity = getActivity();
+        if(activity != null)
+            activity.runOnUiThread(() -> {
+                mDataSet = transactionsData.getTransactions();
+                mAdapter.setDataSet(mDataSet);
+            });
+        else
+            Log.w(TAG, "activity is null");
+    }
+
     /**
      * Initialize the transactions list.
      */
     private void initDataSet() {
-        //TODO change to live data
-        mDataSet = createFakeDataSet();
-    }
-
-    //TODO remove this method or move it to mock object
-    private TransactionData[] createFakeDataSet() {
-        TransactionData one = new TransactionData("0", "2020-11-16T08:10:12:001Z", 11.78f, true, "Check #1234", "https://cdn1.iconfinder.com/data/icons/logotypes/32/android-512.png");
-        TransactionData two = new TransactionData("0", "2020-11-18T08:08:12:001Z", 21.34f, false, "Kwik-E-Mart", "null");
-        return new TransactionData[] {one, two};
+        mController.refreshTransactions();
     }
 
     @Override

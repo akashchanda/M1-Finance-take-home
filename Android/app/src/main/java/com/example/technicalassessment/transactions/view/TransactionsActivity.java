@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.technicalassessment.R;
 import com.example.technicalassessment.transactions.model.TransactionData;
+import com.example.technicalassessment.transactions.model.TransactionsJsonResponse;
 
 /**
  * This activity is the main activity of the app. Its purpose is to encompass all UI elements
@@ -35,5 +36,10 @@ public class TransactionsActivity extends AppCompatActivity implements Transacti
     @Override
     public void openCheckView(TransactionData transactionData, int transactionsListPosition, Bitmap checkImage) {
         mListFragment.openCheckView(transactionData, transactionsListPosition, checkImage);
+    }
+
+    @Override
+    public void updateTransactionsList(TransactionsJsonResponse transactionsData) {
+        mListFragment.updateTransactionsList(transactionsData);
     }
 }

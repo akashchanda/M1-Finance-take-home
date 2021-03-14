@@ -8,5 +8,6 @@ import com.example.technicalassessment.transactions.model.TransactionData;
 public interface TransactionsController {
 
     void onTransactionClicked(TransactionData transactionData, int transactionsListPosition);
+    void refreshTransactions();
 }
 
