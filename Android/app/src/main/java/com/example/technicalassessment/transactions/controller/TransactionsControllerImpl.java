@@ -1,5 +1,8 @@
 package com.example.technicalassessment.transactions.controller;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -8,6 +11,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.technicalassessment.R;
 import com.example.technicalassessment.transactions.model.TransactionData;
 import com.example.technicalassessment.transactions.model.TransactionsJsonResponse;
 import com.example.technicalassessment.transactions.view.TransactionsView;
@@ -79,6 +83,25 @@ class TransactionsControllerImpl implements TransactionsController {
         }
         Log.d(TAG, "array after sorting: " + Arrays.toString(transactions));
         mViewInterface.updateTransactionsList(transactions);
+    }
+
+    @Override
+    public String getUserDescription(String transactionId, Activity context) {
+        String userDescription = "";
+        if(context != null) {
+            SharedPreferences sharedPreferences = context.getPreferences(Context.MODE_PRIVATE);
+            String defaultUserDescription = "";
+            userDescription = sharedPreferences.getString(transactionId, defaultUserDescription);
+        }
+        return userDescription;
+    }
+
+    @Override
+    public void saveUserDescription(String transactionId, CharSequence userDescription, Activity context) {
+        SharedPreferences sharedPref = context.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(transactionId, userDescription.toString());
+        editor.apply();
     }
 
     static class AsyncImageDownloadTask extends AsyncTask<Void, Void, Void> {

@@ -2,7 +2,12 @@
 <resources>
     <dimen name="top_bar_height">70dp</dimen>
     <dimen name="transaction_row_item_height">75dp</dimen>
-    <dimen name="transaction_dialog_height">400dp</dimen>
+    <dimen name="transaction_dialog_height">600dp</dimen>
     <dimen name="transaction_dialog_width">300dp</dimen>
+    <dimen name="check_dialog_height">400dp</dimen>
+    <dimen name="user_description_height">100dp</dimen>
+    <dimen name="user_description_width">250dp</dimen>
+    <dimen name="description_height">20dp</dimen>
+    <dimen name="description_width">250dp</dimen>
     <dimen name="check_image_horizontal_padding">20dp</dimen>
 </resources>

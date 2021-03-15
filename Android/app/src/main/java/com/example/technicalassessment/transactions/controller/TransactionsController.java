@@ -1,5 +1,7 @@
 package com.example.technicalassessment.transactions.controller;
 
+import android.app.Activity;
+
 import com.example.technicalassessment.transactions.model.TransactionData;
 
 /**
@@ -22,5 +24,7 @@ public interface TransactionsController {
     void onTransactionClicked(TransactionData transactionData, int transactionsListPosition);
     void refreshTransactions();
     void sortTransactions(TransactionData[] transactions, SORT_OPTION sortOptionChosen);
+    String getUserDescription(String transactionId, Activity context);
+    void saveUserDescription(String transactionId, CharSequence userDescription, Activity context);
 }
 

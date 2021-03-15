@@ -3,9 +3,12 @@ package com.example.technicalassessment.transactions.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,7 +20,7 @@ import com.example.technicalassessment.R;
  */
 class DetailedTransactionDialog extends Dialog {
     private TextView mDescription;
-    private TextView mUserDescription;
+    private EditText mUserDescription;
     private TextView mAmount;
     private TextView mDate;
     private Button mCloseButton;
@@ -30,7 +33,7 @@ class DetailedTransactionDialog extends Dialog {
 
     interface DetailedTransactionDialogInterface {
         void onCloseButtonClicked();
-        void onUserDescriptionChanged(); //TODO call only when out of focus
+        void onUserDescriptionChanged(CharSequence charSequence); //TODO call only when out of focus
     }
 
     DetailedTransactionDialog(@NonNull Context context, String description, String userDescription,
@@ -49,20 +52,35 @@ class DetailedTransactionDialog extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.detailed_transaction_dialog);
         mDescription = findViewById(R.id.description);
+
         mUserDescription = findViewById(R.id.user_description);
+        mUserDescription.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mListener.onUserDescriptionChanged(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //do nothing
+            }
+        });
+
         mAmount = findViewById(R.id.amount);
         mDate = findViewById(R.id.date);
 
         initFields();
 
         mCloseButton = findViewById(R.id.close);
-        mCloseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-                if(mListener != null)
-                    mListener.onCloseButtonClicked();
-            }
+        mCloseButton.setOnClickListener(v -> {
+            dismiss();
+            if(mListener != null)
+                mListener.onCloseButtonClicked();
         });
 
         //TODO text changed logic and call onUserDescChanged

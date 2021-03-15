@@ -2,6 +2,7 @@ package com.example.technicalassessment.transactions.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -77,8 +78,7 @@ public class TransactionsListFragment extends Fragment implements TransactionLis
     }
 
     void openDetailedTransactionView(TransactionData transactionData, int transactionsListPosition) {
-        //TODO user description local
-        String userDescription = "";
+        String userDescription = mController.getUserDescription(transactionData.getId(), getActivity());
         DetailedTransactionDialog detailedTransactionDialog = new DetailedTransactionDialog(
                 Objects.requireNonNull(getContext()), transactionData.getDescription(),
                 userDescription, transactionData.getAmount(), transactionData.getDateReadable(),
@@ -89,8 +89,8 @@ public class TransactionsListFragment extends Fragment implements TransactionLis
             }
 
             @Override
-            public void onUserDescriptionChanged() {
-                //TODO update local
+            public void onUserDescriptionChanged(CharSequence charSequence) {
+                mController.saveUserDescription(transactionData.getId(), charSequence, getActivity());
             }
         });
         detailedTransactionDialog.show();
