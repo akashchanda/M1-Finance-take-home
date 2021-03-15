@@ -121,6 +121,9 @@ class TransactionsControllerImpl implements TransactionsController {
                         }
                     }
 
+                    //TODO remove
+                    Log.d(TAG, responseBuffer.toString());
+
                     Gson gson = new Gson();
                     TransactionsJsonResponse transactionsData = gson.fromJson(responseBuffer.toString(), TransactionsJsonResponse.class);
 

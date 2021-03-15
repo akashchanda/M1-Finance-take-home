@@ -72,6 +72,12 @@ public class TransactionsListFragment extends Fragment implements TransactionLis
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mController.refreshTransactions();
+    }
+
     void openDetailedTransactionView(TransactionData transactionData, int transactionsListPosition) {
         //TODO user description local
         String userDescription = "";

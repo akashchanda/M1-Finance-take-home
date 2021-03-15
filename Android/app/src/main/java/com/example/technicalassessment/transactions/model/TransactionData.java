@@ -1,11 +1,21 @@
 package com.example.technicalassessment.transactions.model;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * This class represents the data for a transaction.
  */
 public class TransactionData {
+
+    private static final String TAG = "TransactionData";
 
     @SerializedName("id")
     protected String mId;
@@ -41,7 +51,23 @@ public class TransactionData {
     }
 
     public String getDate() {
-        return mDate;
+        SimpleDateFormat format = new SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+        format.setTimeZone(TimeZone.getDefault());
+        try {
+            Date date = format.parse(mDate);
+            if(date == null) {
+                Log.w(TAG, "null date parsed");
+                return "";
+            }
+            String pattern = "MM/dd/yyyy";
+            SimpleDateFormat requiredFormat = new SimpleDateFormat(pattern, Locale.US);
+            return requiredFormat.format(date);
+        }
+        catch(ParseException e) {
+            Log.w(TAG, "couldn't parse date; " + e.getMessage());
+            return "";
+        }
     }
 
     public void setDate(String date) {
