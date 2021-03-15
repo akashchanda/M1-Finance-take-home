@@ -9,9 +9,10 @@
         android:layout_width="@dimen/description_width"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:gravity="center_horizontal"
         android:padding="5dp"
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/user_description"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,6 +41,7 @@
         android:layout_margin="10dp"
         android:padding="5dp"
         android:textColor="@color/black"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@id/date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/user_description" />
@@ -51,6 +53,7 @@
         android:layout_margin="10dp"
         android:padding="5dp"
         android:textColor="@color/black"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@id/close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/amount" />
