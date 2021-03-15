@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.technicalassessment.R;
@@ -143,7 +144,17 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
             amount = 0f;
         }
         String format = holder.itemView.getContext().getString(R.string.amount_format);
-        holder.getAmountTextView().setText(String.format(format, amount));
+        String amountText = String.format(format, amount);
+        TransactionData transactionData = mDataSet[position];
+        //append minus sign if negative amount
+        boolean isNegative = !transactionData.isCredit();
+        TextView amountTextView = holder.getAmountTextView();
+        if(isNegative)
+            amountText = amountTextView.getResources().getString(R.string.minus) + amountText;
+        amountTextView.setText(amountText);
+        amountTextView.setTextColor(isNegative ?
+                ContextCompat.getColor(amountTextView.getContext(), R.color.red) :
+                ContextCompat.getColor(amountTextView.getContext(), R.color.dollar_bill_green));
     }
 
     /**

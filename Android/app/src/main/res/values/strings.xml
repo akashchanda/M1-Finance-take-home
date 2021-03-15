@@ -8,6 +8,7 @@
     <string name="transactions">Transactions</string>
     <string name="close">Close</string>
     <string name="check_image">Image of check.</string>
+    <string name="minus">-</string>
 
     <!--    formats-->
     <string name="amount_format">"$%.2f"</string>
