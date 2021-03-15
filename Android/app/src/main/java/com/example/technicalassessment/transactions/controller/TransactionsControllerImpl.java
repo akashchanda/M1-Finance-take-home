@@ -21,6 +21,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.logging.Logger;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -52,6 +55,30 @@ class TransactionsControllerImpl implements TransactionsController {
     @Override
     public void refreshTransactions() {
         new AsyncTransactionsDataDownloadTask(mViewInterface).execute();
+    }
+
+    @Override
+    public void sortTransactions(TransactionData[] transactions, SORT_OPTION sortOptionChosen) {
+        Log.d(TAG, "array before sorting: " + Arrays.toString(transactions));
+        switch(sortOptionChosen) {
+            case NONE:
+                refreshTransactions();
+                break;
+            case DATE_ASCENDING:
+                Arrays.sort(transactions, new TransactionData.TransactionDateComparator());
+                break;
+            case DATE_DESCENDING:
+                Arrays.sort(transactions, Collections.reverseOrder(new TransactionData.TransactionDateComparator()));
+                break;
+            case AMOUNT_ASCENDING:
+                Arrays.sort(transactions, new TransactionData.TransactionAmountComparator());
+                break;
+            case AMOUNT_DESCENDING:
+                Arrays.sort(transactions, Collections.reverseOrder(new TransactionData.TransactionAmountComparator()));
+                break;
+        }
+        Log.d(TAG, "array after sorting: " + Arrays.toString(transactions));
+        mViewInterface.updateTransactionsList(transactions);
     }
 
     static class AsyncImageDownloadTask extends AsyncTask<Void, Void, Void> {
@@ -129,7 +156,7 @@ class TransactionsControllerImpl implements TransactionsController {
 
                     myConnection.disconnect();
 
-                    mViewInterface.updateTransactionsList(transactionsData);
+                    mViewInterface.updateTransactionsList(transactionsData.getTransactions());
 
                     return null;
                 }

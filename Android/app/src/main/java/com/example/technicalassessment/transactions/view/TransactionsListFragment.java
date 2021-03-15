@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.URLUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +20,6 @@ import com.example.technicalassessment.transactions.controller.TransactionsContr
 import com.example.technicalassessment.transactions.controller.TransactionsControllerFactory;
 import com.example.technicalassessment.transactions.model.CheckImageDialog;
 import com.example.technicalassessment.transactions.model.TransactionData;
-import com.example.technicalassessment.transactions.model.TransactionsJsonResponse;
 
 import java.util.Objects;
 
@@ -83,7 +81,7 @@ public class TransactionsListFragment extends Fragment implements TransactionLis
         String userDescription = "";
         DetailedTransactionDialog detailedTransactionDialog = new DetailedTransactionDialog(
                 Objects.requireNonNull(getContext()), transactionData.getDescription(),
-                userDescription, transactionData.getAmount(), transactionData.getDate(),
+                userDescription, transactionData.getAmount(), transactionData.getDateReadable(),
                 new DetailedTransactionDialog.DetailedTransactionDialogInterface() {
             @Override
             public void onCloseButtonClicked() {
@@ -116,11 +114,11 @@ public class TransactionsListFragment extends Fragment implements TransactionLis
             Log.w(TAG, "activity is null");
     }
 
-    void updateTransactionsList(TransactionsJsonResponse transactionsData) {
+    void updateTransactionsList(TransactionData[] transactionsData) {
         Activity activity = getActivity();
         if(activity != null)
             activity.runOnUiThread(() -> {
-                mDataSet = transactionsData.getTransactions();
+                mDataSet = transactionsData;
                 mAdapter.setDataSet(mDataSet);
             });
         else
@@ -137,5 +135,9 @@ public class TransactionsListFragment extends Fragment implements TransactionLis
     @Override
     public void onTransactionClick(TransactionData transactionData, int position) {
         mController.onTransactionClicked(transactionData, position);
+    }
+
+    public TransactionData[] getDataSet() {
+        return mDataSet;
     }
 }

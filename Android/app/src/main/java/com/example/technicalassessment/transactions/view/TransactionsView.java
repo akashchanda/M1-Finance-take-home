@@ -11,5 +11,5 @@ import com.example.technicalassessment.transactions.model.TransactionsJsonRespon
 public interface TransactionsView {
     void openDetailedTransactionView(TransactionData transactionData, int transactionsListPosition);
     void openCheckView(TransactionData transactionData, int transactionsListPosition, Bitmap checkImage);
-    void updateTransactionsList(TransactionsJsonResponse transactionsData);
+    void updateTransactionsList(TransactionData[] transactionsData);
 }

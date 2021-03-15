@@ -1,6 +1,5 @@
 package com.example.technicalassessment.transactions.view;
 
-import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -174,7 +173,7 @@ public class TransactionListAdapter extends RecyclerView.Adapter<TransactionList
     private String getDate(int position) {
         if(position < 0 || position >= mDataSet.length)
             throw new IllegalArgumentException("invalid position");
-        return mDataSet[position].getDate();
+        return mDataSet[position].getDateReadable();
     }
 
     /**

@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -50,7 +51,20 @@ public class TransactionData {
         mId = id;
     }
 
-    public String getDate() {
+    public Date getDate() {
+        SimpleDateFormat format = new SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+        format.setTimeZone(TimeZone.getDefault());
+        try {
+            return format.parse(mDate);
+        }
+        catch(ParseException e) {
+            Log.w(TAG, "couldn't parse date; " + e.getMessage());
+            return null;
+        }
+    }
+
+    public String getDateReadable() {
         SimpleDateFormat format = new SimpleDateFormat(
                 "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
         format.setTimeZone(TimeZone.getDefault());
@@ -104,5 +118,43 @@ public class TransactionData {
 
     public void setImageUrl(String imageUrl) {
         mImageUrl = imageUrl;
+    }
+
+    public static class TransactionDateComparator implements Comparator<TransactionData> {
+        @Override
+        public int compare(TransactionData transactionData1, TransactionData transactionData2) {
+            Date date1 = transactionData1.getDate();
+            Date date2 = transactionData2.getDate();
+            if(date1 == null || date2 == null) {
+                Log.w(TAG, "error getting date objects during comparator operation");
+                return 0;
+            }
+            return date1.compareTo(date2);
+        }
+    }
+
+    public static class TransactionAmountComparator implements Comparator<TransactionData> {
+        @Override
+        public int compare(TransactionData transactionData1, TransactionData transactionData2) {
+            Float float1 = transactionData1.getAmount();
+            if(!transactionData1.isCredit())
+                float1 *= -1f;
+            Float float2 = transactionData2.getAmount();
+            if(!transactionData2.isCredit())
+                float2 *= -1f;
+            return float1.compareTo(float2);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "TransactionData{" +
+                "mId='" + mId + '\'' +
+                ", mDate='" + mDate + '\'' +
+                ", mAmount=" + mAmount +
+                ", mIsCredit=" + mIsCredit +
+                ", mDescription='" + mDescription + '\'' +
+                ", mImageUrl='" + mImageUrl + '\'' +
+                '}';
     }
 }
